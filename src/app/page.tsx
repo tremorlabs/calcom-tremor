@@ -1,6 +1,7 @@
 "use client"
 
 import { BarChart } from "@/components/BarChart"
+import { AreaChart } from "@/components/AreaChart";
 
 const data =
   [
@@ -45,8 +46,20 @@ const data =
 
 export default function Home() {
   return (
-    <main className="p-4 sm:p-10">
+    <main className="p-4 sm:p-10 space-y-6">
       <BarChart
+        className="h-[450px]"
+        data={data}
+        index="month"
+        categories={["Distinct values of userId"]}
+        valueFormatter={(number: number) =>
+          `${Intl.NumberFormat("us").format(number).toString()}`
+        }
+        onValueChange={(v) => console.log(v)}
+        xAxisLabel="Month"
+        yAxisLabel="Active users"
+      />
+      <AreaChart
         className="h-[450px]"
         data={data}
         index="month"
