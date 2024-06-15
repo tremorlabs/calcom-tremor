@@ -3,6 +3,9 @@
 import { BarChart } from "@/components/BarChart"
 import { AreaChart } from "@/components/AreaChart";
 
+
+// based on cal.com's publicly available data
+
 const data =
   [
     { month: "June, 2021", "Distinct values of userId": 7 },
