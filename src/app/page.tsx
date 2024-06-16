@@ -1,37 +1,33 @@
-"use client"
+"use server"
+import Charts from "../components/charts";
 
-import React, { useEffect, useState } from "react";
-import { BarChart } from "@/components/BarChart";
+type RawMonthlyActiveUser = {
+  month: string
+  "Distinct values of userId": string
+}
 
-export default function Home() {
-  const [data, setData] = useState(null);
+export type MonthlyActiveUser = {
+  month: string
+  "Monthly active users": number
+}
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch('/api/data');
-      const result = await res.json();
-      setData(result.data);
-    }
+async function getData(): Promise<MonthlyActiveUser[]> {
+  const res = await fetch('https://cal.metabaseapp.com/public/question/81ced336-2644-47f3-ae2f-6bda42f2399d.json')
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
 
-    fetchData();
-  }, []);
+  const data: RawMonthlyActiveUser[] = await res.json()
 
-  if (!data) return <div className="p-4 sm:p-10 flex flex-col items-center h-[450px] justify-center text-sm text-gray-600">Loading...</div>;
+  return data.map(item => ({ ...item, "Monthly active users": parseInt(item['Distinct values of userId'].replace(/,/g, ''), 10) }))
+}
+
+export default async function Home() {
+  const data = await getData()
 
   return (
-    <main className="p-4 sm:p-10 space-y-6">
-      <BarChart
-        className="h-[450px]"
-        data={data}
-        index="month"
-        categories={["Distinct values of userId"]}
-        valueFormatter={(number: number) =>
-          `${Intl.NumberFormat("us").format(number).toString()}`
-        }
-        onValueChange={(v) => console.log(v)}
-        xAxisLabel="Month"
-        yAxisLabel="Active users"
-      />
+    <main className="p-4 sm:p-10">
+      <Charts data={data} />
     </main>
   );
 }
