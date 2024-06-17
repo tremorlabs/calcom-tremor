@@ -12,8 +12,9 @@ type ChartsProps = {
 }
 
 export default function Charts({ data }: ChartsProps) {
-    const index = Object.keys(data[0])[0]
-    const category = Object.keys(data[0])[1]
+    const keys = Object.keys(data[0])
+    const index = keys[0]
+    const category = keys[1]
     return (
         <>
             <BarChart
