@@ -5,12 +5,12 @@ import {
     Data,
     // MonthlyActiveUser 
 } from "../app/page";
-import { capitalize } from "@/lib/utils";
+// import { capitalize } from "@/lib/utils";
 
 type ChartsProps = {
     data: Data[]
-    xAxisLabel: string,
-    yAxisLabel: string,
+    xAxisLabel?: string,
+    yAxisLabel?: string,
 }
 
 export default function Chart({ data, xAxisLabel, yAxisLabel }: ChartsProps) {
