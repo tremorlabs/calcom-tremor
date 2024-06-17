@@ -1,27 +1,33 @@
 "use client"
 
 import { BarChart } from "@/components/BarChart"
-import { MonthlyActiveUser } from "../app/page";
+import {
+    Data,
+    // MonthlyActiveUser 
+} from "../app/page";
+import { capitalize } from "@/lib/utils";
 
 type ChartsProps = {
-  data: MonthlyActiveUser[]
+    data: Data[]
 }
 
 export default function Charts({ data }: ChartsProps) {
-  return (
-    <>
-      <BarChart
-        className="h-[450px]"
-        data={data}
-        index="month"
-        categories={["Monthly active users"]}
-        valueFormatter={(number: number) =>
-          `${Intl.NumberFormat("us").format(number).toString()}`
-        }
-        // onValueChange={(v) => console.log(v)}
-        xAxisLabel="Month"
-        yAxisLabel="Active users"
-      />
-    </>
-  );
+    const index = Object.keys(data[0])[0]
+    const category = Object.keys(data[0])[1]
+    return (
+        <>
+            <BarChart
+                className="h-[450px]"
+                data={data}
+                index={index}
+                categories={[category]}
+                valueFormatter={(number: number) =>
+                    `${Intl.NumberFormat("us").format(number).toString()}`
+                }
+                // onValueChange={(v) => console.log(v)}
+                xAxisLabel={capitalize(index)}
+                yAxisLabel={capitalize(category)}
+            />
+        </>
+    );
 }
