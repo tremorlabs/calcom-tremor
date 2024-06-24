@@ -1,5 +1,6 @@
 "use server"
 import Chart from "../components/chart";
+import { CategoryBar } from "@/components/CategoryBar";
 
 type RawData = Record<string, string>
 
